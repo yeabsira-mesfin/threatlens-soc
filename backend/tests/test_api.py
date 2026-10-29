@@ -27,6 +27,10 @@ def test_role_restrictions_alert_triage_and_case_report(tmp_path,monkeypatch):
         ingested=client.post('/api/ingest',headers=analyst,json=batch)
         assert ingested.status_code==200
         assert ingested.json()=={'ingested':5,'new_alerts':1}
+        iocs=client.get('/api/iocs?q=198.51.100.99',headers=viewer)
+        assert iocs.status_code==200
+        assert iocs.json()['count']==5
+        assert client.get('/api/iocs?q=x',headers=analyst).status_code==400
         alerts=client.get('/api/alerts',headers=analyst)
         assert alerts.status_code==200
         alert=alerts.json()['alerts'][0]
