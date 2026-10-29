@@ -20,3 +20,21 @@ def test_synthetic_geo_and_endpoint_mapping():
     ]
     techniques={a['technique'] for a in detect(items)}
     assert techniques=={'T1078','T1059.001'}
+
+
+def test_synthetic_port_scan_threshold_and_benign_traffic():
+    denied = [
+        event(i+1,f'2026-10-28T13:{i:02d}:00Z',
+              kind='firewall',action='denied',ip='198.51.100.77',
+              destination=f'192.0.2.10:{4000+i}')
+        for i in range(5)
+    ]
+    findings=detect(denied)
+    port_scan=[x for x in findings if x['rule_id']=='PORT_SCAN_HEURISTIC']
+    assert len(port_scan)==1
+    assert port_scan[0]['technique']=='T1046'
+    assert not detect(denied[:4])
+    benign=[event(i+1,f'2026-10-28T14:{i:02d}:00Z',
+             kind='firewall',action='allowed',ip='198.51.100.77',
+             destination=f'192.0.2.10:{4000+i}') for i in range(5)]
+    assert not [x for x in detect(benign) if x['rule_id']=='PORT_SCAN_HEURISTIC']
