@@ -81,5 +81,45 @@
     "source_ip": "192.0.2.6",
     "destination": "/health",
     "summary": "Benign health request"
+  },
+  {
+    "timestamp": "2026-10-28T13:35:00Z",
+    "event_type": "firewall",
+    "action": "denied",
+    "source_ip": "198.51.100.77",
+    "destination": "192.0.2.10:4000",
+    "summary": "Synthetic multi-port firewall deny event"
+  },
+  {
+    "timestamp": "2026-10-28T13:36:00Z",
+    "event_type": "firewall",
+    "action": "denied",
+    "source_ip": "198.51.100.77",
+    "destination": "192.0.2.10:4001",
+    "summary": "Synthetic multi-port firewall deny event"
+  },
+  {
+    "timestamp": "2026-10-28T13:37:00Z",
+    "event_type": "firewall",
+    "action": "denied",
+    "source_ip": "198.51.100.77",
+    "destination": "192.0.2.10:4002",
+    "summary": "Synthetic multi-port firewall deny event"
+  },
+  {
+    "timestamp": "2026-10-28T13:38:00Z",
+    "event_type": "firewall",
+    "action": "denied",
+    "source_ip": "198.51.100.77",
+    "destination": "192.0.2.10:4003",
+    "summary": "Synthetic multi-port firewall deny event"
+  },
+  {
+    "timestamp": "2026-10-28T13:39:00Z",
+    "event_type": "firewall",
+    "action": "denied",
+    "source_ip": "198.51.100.77",
+    "destination": "192.0.2.10:4004",
+    "summary": "Synthetic multi-port firewall deny event"
   }
 ]
