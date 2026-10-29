@@ -5,3 +5,11 @@
 .case-edit-form label{display:grid;gap:6px;font-size:.73rem;font-weight:700}
 .case-edit-form textarea{width:100%;min-height:85px;resize:vertical}
 .case-edit-form button{justify-self:start}
+
+
+/* WCAG text contrast corrections */
+.auth-card .kicker{color:#126880}
+.auth-card p,.auth-card small{color:#44576b}
+.topbar{color:#4d6278}
+.page-head p,.panel p,.stat>div,.stat small,.signal-row small{color:#485e73}
+.side-label{color:#b5cee0}
