@@ -1,0 +1,14 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      THREATLENS_DB: /app/data/threatlens.db
+      THREATLENS_SECRET: ${THREATLENS_SECRET:?Set THREATLENS_SECRET}
+      THREATLENS_DEMO_PASSWORD: ${THREATLENS_DEMO_PASSWORD:?Set THREATLENS_DEMO_PASSWORD}
+    volumes: ["threatlens_data:/app/data"]
+  web:
+    build: ./frontend
+    ports: ["127.0.0.1:8082:80"]
+    depends_on: [api]
+volumes:
+  threatlens_data:
