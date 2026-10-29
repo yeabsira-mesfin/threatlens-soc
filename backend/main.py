@@ -91,6 +91,14 @@ def events(q:str='',limit:int=100,_=Depends(actor)):
         keyword='%'+q[:80]+'%'
         rows=conn.execute('SELECT * FROM events WHERE summary LIKE ? OR source_ip LIKE ? OR actor LIKE ? ORDER BY timestamp DESC,id DESC LIMIT ?',(*[keyword]*3,max(1,min(limit,500)))).fetchall()
         return {'events':[dict(row) for row in rows]}
+@app.get('/api/iocs')
+def search_iocs(q:str='',limit:int=100,_=Depends(actor)):
+    needle=q.strip()
+    if len(needle)<3 or len(needle)>100:raise HTTPException(400,'IOC query must contain 3 to 100 characters')
+    with db() as conn:
+        pattern='%'+needle+'%'
+        rows=conn.execute('SELECT id,timestamp,event_type,action,source_ip,destination,process,summary,severity FROM events WHERE source_ip LIKE ? OR destination LIKE ? OR process LIKE ? OR summary LIKE ? ORDER BY timestamp DESC,id DESC LIMIT ?',(*[pattern]*4,max(1,min(limit,500)))).fetchall()
+        return {'matches':[dict(row) for row in rows],'count':len(rows),'query':needle}
 @app.get('/api/alerts')
 def alerts(_=Depends(actor)):
     with db() as conn:
