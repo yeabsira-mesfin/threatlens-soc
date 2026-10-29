@@ -29,3 +29,32 @@ jobs:
           node-version: '22'
       - run: npm install --no-audit --no-fund
       - run: npm run build
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install local SOC API requirements
+        working-directory: backend
+        run: python -m pip install -r requirements.txt
+      - name: Seed disposable synthetic SOC environment
+        working-directory: backend
+        run: python seed.py
+        env:
+          THREATLENS_SECRET: ${{ github.run_id }}-${{ github.sha }}
+          THREATLENS_DEMO_PASSWORD: ${{ github.sha }}
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run desktop/mobile SOC browser QA
+        run: npm run test:e2e
+        env:
+          THREATLENS_SECRET: ${{ github.run_id }}-${{ github.sha }}
+          THREATLENS_DEMO_PASSWORD: ${{ github.sha }}
+      - name: Store screenshots and browser traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: threatlens-browser-qa
+          path: |
+            frontend/test-results/
+            frontend/playwright-report/
+          if-no-files-found: ignore
