@@ -58,3 +58,10 @@ jobs:
             frontend/test-results/
             frontend/playwright-report/
           if-no-files-found: ignore
+
+      - name: Validate local Docker Compose configuration
+        working-directory: .
+        run: docker compose --env-file docker.env.example config --quiet
+      - name: Build local container images
+        working-directory: .
+        run: docker compose --env-file docker.env.example build
