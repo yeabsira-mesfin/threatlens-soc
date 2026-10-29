@@ -8,6 +8,7 @@ test('IOC correlation and analyst case notes',async({page},testInfo)=>{
  await expect(page.getByRole('heading',{name:'IOC lookup'})).toBeVisible();
  await page.getByRole('button',{name:'Search telemetry'}).click();
  await expect(page.getByRole('heading',{name:'Matching records (5)'})).toBeVisible();
+ await page.evaluate(()=>window.scrollTo(0,0));
  await page.screenshot({path:testInfo.outputPath('threatlens-ioc-search.png'),fullPage:true});
  await page.getByRole('button',{name:/Investigations/}).click();
  await page.getByPlaceholder('Case title').fill('QA Investigation Notes '+Date.now());
