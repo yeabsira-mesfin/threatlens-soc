@@ -11,6 +11,8 @@ test('analyst workflow: responsive overview, detections, investigations and role
   await page.setViewportSize({width:390,height:844});
   await expect(page.getByRole('navigation',{name:'SOC navigation'})).toBeVisible();
   await page.screenshot({path:testInfo.outputPath('threatlens-mobile.png'),fullPage:true});
+  const horizontalOverflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
+  expect(horizontalOverflow).toBeLessThanOrEqual(1);
   await page.setViewportSize({width:1400,height:900});
   await page.getByRole('button',{name:/Alert queue/}).click();
   await expect(page.getByRole('heading',{name:'Alert queue'})).toBeVisible();
