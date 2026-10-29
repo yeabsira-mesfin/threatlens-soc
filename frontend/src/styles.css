@@ -13,3 +13,13 @@
 .topbar{color:#4d6278}
 .page-head p,.panel p,.stat>div,.stat small,.signal-row small{color:#485e73}
 .side-label{color:#b5cee0}
+
+
+/* WCAG dashboard status, badge and metadata contrast */
+.top-actions>span:first-child{color:#1c654d}
+.kicker,.text-link{color:#0b6279}
+.panel-title small,.bar-row>div:first-child,small{color:#4b5e72}
+.flag{color:#4b5c70}
+.flag-danger{color:#8f3927}
+.flag-success{color:#1c6b4e}
+.flag-info{color:#165f80}
